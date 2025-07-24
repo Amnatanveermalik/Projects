@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Digi Detox - Meditation Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(45deg, #7fcfa3, #46c780);
+      color: white;
+      text-align: center;
+      padding: 48px 16px;
+    }
+
+    header img {
+            border-radius: 50%;
+            size: 2cap;
+            margin-top: 1em;
+        }
+
+    header h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 16px;
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 5px;
+      font-size: 18px;
+      margin: 0 10px;
+      display: inline-block;
+    }
+
+    nav a:hover {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .timer-section {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .timer-buttons button {
+      padding: 12px 24px;
+      margin: 10px;
+      font-size: 16px;
+      border: none;
+      background-color: #46c780;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .timer-buttons button:hover {
+      background-color: #3da46c;
+    }
+
+    #countdown {
+      font-size: 80px;
+      margin: 20px 0;
+      color: #237c4b;
+    }
+
+    input[type="number"] {
+      padding: 8px;
+      width: 60px;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    footer {
+      background: linear-gradient(45deg, #7fcfa3, #46c780);
+      color: white;
+      text-align: center;
+      padding: 16px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Meditation Timer</h1>
+        <img src="i1.jpeg" alt="Digi-Detox Logo" width="170"><br><br>
+    <nav>
+      <a href="digitox home.html">Home</a>
+      <a href="digitox tips.html">Tips</a>
+            <a href="about.html">About</a>
+            <a href="benefits.html">Benefits</a>
+            <a href="gallery.html">Gallery</a>
+            <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <div class="timer-section">
+    <h2 style="color: #237c4b;">Select Your Meditation Time</h2>
+    <div class="timer-buttons">
+      <button onclick="startTimer(2)">2 Minutes</button>
+      <button onclick="startTimer(5)">5 Minutes</button>
+      <button onclick="startTimer(10)">10 Minutes</button>
+      <button onclick="startTimer(15)">15 Minutes</button>
+      <button onclick="startTimer(20)">20 Minutes</button>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <label for="customTime">Custom (minutes): </label>
+      <input type="number" id="customTime" min="1" max="120" />
+      <button onclick="startCustomTimer()">Start</button>
+    </div>
+
+    <div id="countdown">00:00</div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 Digi-Detox</p>
+  </footer>
+
+  <script>
+    let timerInterval;
+
+    function startTimer(minutes) {
+      clearInterval(timerInterval);
+      let totalSeconds = minutes * 60;
+      updateDisplay(totalSeconds);
+      timerInterval = setInterval(() => {
+        totalSeconds--;
+        if (totalSeconds < 0) {
+          clearInterval(timerInterval);
+          document.getElementById("countdown").innerText = "Time's up!";
+          return;
+        }
+        updateDisplay(totalSeconds);
+      }, 1000);
+    }
+
+    function startCustomTimer() {
+      const custom = parseInt(document.getElementById("customTime").value);
+      if (!custom || custom <= 0) {
+        alert("Please enter a valid number.");
+        return;
+      }
+      startTimer(custom);
+    }
+
+    function updateDisplay(seconds) {
+      const min = Math.floor(seconds / 60);
+      const sec = seconds % 60;
+      document.getElementById("countdown").innerText =
+        `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+    }
+  </script>
+
+</body>
+</html>
